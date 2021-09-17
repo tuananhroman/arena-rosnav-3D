@@ -106,10 +106,10 @@ class DeploymentDRLAgent(BaseDRLAgent):
             action publishing rate.
         """
         while not rospy.is_shutdown():
-            if self._is_train_mode:
-                self.call_service_takeSimStep(self._action_frequency)
-            else:
-                self._wait_for_next_action_cycle()
+            # if self._is_train_mode:
+            #     self.call_service_takeSimStep(self._action_frequency)
+            # else:
+            #     self._wait_for_next_action_cycle()
             obs = self.get_observations()[0]
             action = self.get_action(obs)
             self.publish_action(action)
@@ -153,5 +153,5 @@ def main(agent_name: str) -> None:
 
 
 if __name__ == "__main__":
-    AGENT_NAME = "rule_04"
+    AGENT_NAME = "AGENT_22_2021_09_13__17_28"
     main(agent_name=AGENT_NAME)
