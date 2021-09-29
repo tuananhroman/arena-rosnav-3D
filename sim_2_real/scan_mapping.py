@@ -28,6 +28,11 @@ class ScanMapper:
             "/scan_mapped", LaserScan, queue_size=1
         )
 
+    def callback_flip_laserscan(self, data: LaserScan):
+        np_scan = np.array(data.ranges, dtype=np.float32)
+        data.ranges = np.flip(np_scan)
+        self._new_scan_pub.publish(data)
+
     def callback_change_laserscan(self, data):
         self._old_angle = data.angle_min
         new_angle = rospy.get_param("angle_min")
