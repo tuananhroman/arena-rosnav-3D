@@ -20,7 +20,7 @@ class ScanMapper:
 
         # Subscribers (callback functions are triggered on incoming data and written to 'data' as defined by ROS)
         self._robot_state_sub = rospy.Subscriber(
-            "/scan", LaserScan, self.callback_change_laserscan
+            "/scan", LaserScan, self.callback_flip_laserscan
         )
 
         # Publishers
@@ -28,9 +28,9 @@ class ScanMapper:
             "/scan_mapped", LaserScan, queue_size=1
         )
 
-    def callback_flip_laserscan(self, data: LaserScan):
+    def callback_flip_laserscan(self, data):
         np_scan = np.array(data.ranges, dtype=np.float32)
-        data.ranges = np.flip(np_scan)
+        data.ranges = np.flip(np_scan, 0)
         self._new_scan_pub.publish(data)
 
     def callback_change_laserscan(self, data):
