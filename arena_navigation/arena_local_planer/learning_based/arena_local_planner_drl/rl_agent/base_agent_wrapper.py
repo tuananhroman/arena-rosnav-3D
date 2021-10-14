@@ -78,9 +78,6 @@ class BaseDRLAgent(ABC):
             self._ns_robot, self._num_laser_beams, self._laser_range, True
         )
 
-        # for time controlling in train mode
-        self._action_frequency = 1 / rospy.get_param("/robot_action_rate")
-
         if self._is_train_mode:
             # w/o action publisher node
             self._action_pub = rospy.Publisher(
@@ -90,7 +87,7 @@ class BaseDRLAgent(ABC):
             # w/ action publisher node
             # (controls action rate being published on '../cmd_vel')
             self._action_pub = rospy.Publisher(
-                f"{self._ns_robot}cmd_vel_pub", Twist, queue_size=1
+                f"{self._ns_robot}cmd_vel", Twist, queue_size=1
             )
 
     @abstractmethod
